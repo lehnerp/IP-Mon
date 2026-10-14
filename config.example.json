@@ -1,0 +1,134 @@
+{
+  "poll_interval_seconds": 2,
+  "sample_interval_seconds": 10,
+  "ping_timeout_seconds": 1.5,
+  "http_timeout_seconds": 5,
+  "listen_host": "0.0.0.0",
+  "listen_port": 8096,
+  "database": "monitor.db",
+  "history_retention_days": 30,
+  "event_retention_days": 365,
+  "ui": {
+    "language": "en"
+  },
+  "auth": {
+    "enabled": false,
+    "username": "admin",
+    "password_env": "IPMON_WEB_PASSWORD",
+    "read_only_without_login": true
+  },
+  "email_alerts": {
+    "enabled": false,
+    "degradation_seconds": 180,
+    "recovery_seconds": 60,
+    "statistics_window_seconds": 180,
+    "health_score_below": 55,
+    "availability_below": 99.0,
+    "latency_above_ms": 100,
+    "jitter_above_ms": 30,
+    "http_latency_above_ms": 1000,
+    "http_jitter_above_ms": 300,
+    "offline": true,
+    "send_recovery": true,
+    "reminder_seconds": 0,
+    "smtp": {
+      "host": "smtp.example.com",
+      "port": 587,
+      "username": "monitor@example.com",
+      "password_env": "IPMON_SMTP_PASSWORD",
+      "starttls": true,
+      "ssl": false,
+      "from": "monitor@example.com",
+      "to": [
+        "admin@example.com"
+      ],
+      "timeout_seconds": 10,
+      "escalation_to": [
+        "network-lead@example.com"
+      ]
+    },
+    "group_overrides": {
+      "U5": {
+        "latency_above_ms": 50,
+        "jitter_above_ms": 15
+      }
+    },
+    "minimum_failed_checks": 3,
+    "packet_loss_above_percent": 5.0,
+    "p95_latency_above_ms": 150,
+    "http_p95_latency_above_ms": 1500,
+    "alert_on_anomaly_levels": [
+      "HIGH",
+      "SEVERE"
+    ],
+    "tls_expiry_warning_days": 30,
+    "alert_on_flapping": true,
+    "escalation_seconds": 900
+  },
+  "targets": [
+    {
+      "name": "APP-01",
+      "host": "10.0.0.101",
+      "tcp_port": 443,
+      "group": "Production",
+      "maintenance": {
+        "timezone": "Europe/Prague",
+        "windows": [
+          {
+            "days": [
+              "sat"
+            ],
+            "start": "22:00",
+            "end": "23:30",
+            "label": "Weekly maintenance"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PLC-01",
+      "host": "10.0.0.104",
+      "group": "Production",
+      "alerts": {
+        "latency_above_ms": 40,
+        "jitter_above_ms": 10
+      },
+      "depends_on": [
+        "APP-01"
+      ]
+    },
+    {
+      "name": "Web",
+      "url": "https://web.eu/",
+      "verify_ssl": true,
+      "group": "Web",
+      "expected_status": "200-399",
+      "expected_body_contains": [
+        "html"
+      ],
+      "forbidden_body_contains": [
+        "Service Unavailable"
+      ]
+    }
+  ],
+  "monitoring": {
+    "failure_window_checks": 5,
+    "failure_threshold": 3,
+    "recovery_success_threshold": 3,
+    "baseline_enabled": true,
+    "baseline_time_constant_hours": 6,
+    "baseline_min_samples": 30,
+    "anomaly_elevated_z": 2.5,
+    "anomaly_high_z": 4.0,
+    "anomaly_severe_z": 6.0,
+    "tls_expiry_warning_days": 30,
+    "group_overrides": {},
+    "flapping_window_seconds": 900,
+    "flapping_transition_threshold": 4
+  },
+  "timezone": "Europe/Prague",
+  "groups": [
+    "Production",
+    "Web"
+  ]
+}

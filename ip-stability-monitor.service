@@ -1,0 +1,23 @@
+[Unit]
+Description=IP Stability Monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/ip_stability_monitor
+ExecStart=/opt/ip_stability_monitor/venv/bin/python /opt/ip_stability_monitor/app.py
+# The dashboard "Restart monitor" button exits with code 3; systemd starts a fresh process.
+Restart=always
+RestartSec=2
+User=monitor
+# Optional secrets (SMTP / dashboard password) - create with: sudo install -m 600 /dev/null /etc/ip-stability-monitor.env
+EnvironmentFile=-/etc/ip-stability-monitor.env
+# ping needs its file capability (cap_net_raw), so NoNewPrivileges is intentionally not set.
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/ip_stability_monitor
+
+[Install]
+WantedBy=multi-user.target

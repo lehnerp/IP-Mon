@@ -1,0 +1,3 @@
+Flask==3.1.0
+# Production WSGI server (optional but recommended; used automatically when installed)
+waitress>=3.0

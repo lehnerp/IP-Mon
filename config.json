@@ -1,0 +1,85 @@
+{
+  "listen_host": "0.0.0.0",
+  "listen_port": 8096,
+  "database": "monitor.db",
+  "groups": [
+    "Local",
+    "Internet"
+  ],
+  "targets": [
+    {
+      "name": "This computer",
+      "host": "127.0.0.1",
+      "group": "Local"
+    },
+    {
+      "name": "Cloudflare DNS",
+      "host": "1.1.1.1",
+      "group": "Internet"
+    },
+    {
+      "name": "Google DNS",
+      "host": "8.8.8.8",
+      "group": "Internet"
+    },
+    {
+      "name": "Cloudflare web",
+      "url": "https://www.cloudflare.com/",
+      "group": "Internet"
+    }
+  ],
+  "poll_interval_seconds": 2,
+  "sample_interval_seconds": 10,
+  "ping_timeout_seconds": 1.5,
+  "http_timeout_seconds": 5,
+  "history_retention_days": 30,
+  "event_retention_days": 365,
+  "ui": {
+    "language": "en"
+  },
+  "monitoring": {
+    "startup_reconciliation": true,
+    "startup_success_checks": 2,
+    "startup_failure_checks": 3,
+    "startup_alert_grace_seconds": 30,
+    "startup_stale_after_seconds": 60,
+    "path_health_enabled": true,
+    "path_health_interval_seconds": 300,
+    "path_health_burst_packets": 8,
+    "path_health_timeout_seconds": 8,
+    "path_health_loss_watch_percent": 5,
+    "path_health_loss_critical_percent": 20,
+    "path_health_jitter_watch_ms": 5,
+    "path_health_baseline_ratio_watch": 2.5,
+    "failure_window_checks": 5,
+    "failure_threshold": 3,
+    "recovery_success_threshold": 3,
+    "baseline_enabled": true,
+    "baseline_time_constant_hours": 6,
+    "baseline_min_samples": 30,
+    "anomaly_elevated_z": 2.5,
+    "anomaly_high_z": 4.0,
+    "anomaly_severe_z": 6.0,
+    "tls_expiry_warning_days": 30,
+    "flapping_window_seconds": 900,
+    "flapping_transition_threshold": 4
+  },
+  "email_alerts": {
+    "enabled": false,
+    "degradation_seconds": 180,
+    "recovery_seconds": 60,
+    "statistics_window_seconds": 180,
+    "health_score_below": 55,
+    "availability_below": 99.0,
+    "latency_above_ms": 100,
+    "jitter_above_ms": 30,
+    "http_latency_above_ms": 1000,
+    "http_jitter_above_ms": 300,
+    "offline": true,
+    "send_recovery": true,
+    "reminder_seconds": 0,
+    "minimum_failed_checks": 3,
+    "alert_on_flapping": true,
+    "escalation_seconds": 900
+  }
+}
